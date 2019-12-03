@@ -1,14 +1,12 @@
 package src;
 
 import java.awt.Container;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 public class BasicFrame extends JFrame{
 	int score;
