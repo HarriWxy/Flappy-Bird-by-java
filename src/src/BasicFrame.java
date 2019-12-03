@@ -26,6 +26,7 @@ public class BasicFrame extends JFrame{
 		c.add(back_lab);
 		this.setVisible(true);
 		
+		
 	}
 	public static void main(String[] args) {//test
 		new BasicFrame();
