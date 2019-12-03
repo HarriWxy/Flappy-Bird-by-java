@@ -25,6 +25,7 @@ public class BasicFrame extends JFrame{
 		back_lab.setBounds(0, 0, back_img.getIconWidth(), back_img.getIconHeight());
 		c.add(back_lab);
 		this.setVisible(true);
+		
 	}
 	public static void main(String[] args) {//test
 		new BasicFrame();
