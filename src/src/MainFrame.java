@@ -15,4 +15,7 @@ public class MainFrame extends BasicFrame {//主要的程序界面实现
 		// TODO Auto-generated method stub
 		super.paint(arg0);
 	}
+	public static void main(String[] args) {
+		MainFrame test=new MainFrame();
+	}
 }
