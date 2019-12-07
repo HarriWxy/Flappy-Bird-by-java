@@ -3,19 +3,30 @@ package src;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
 public abstract class BasicFrame extends JFrame{
 	Container c;
-	JLabel score_lab;//得分标签
+	JLabel score_lab;//得分标签,可以不用标签，用paint画出来
 	int frame_width=720,frame_height=1080;//界面的大小
-	ImageIcon back_img;
+	ImageIcon back_img,pipe_img;//背景图片,鸟和管道
+	Image[]birds_img=new Image[3];
+	int score,hisscore;//得分和历史得分
+	JPanel center_pan;//中间按钮区域
+	JButton start_but,history_but,help_but,exit_but;
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -28,14 +39,59 @@ public abstract class BasicFrame extends JFrame{
 		score_lab.setOpaque(false);
 		score_lab.setSize(new Dimension(40,40));
 		score_lab.setLayout(new BorderLayout());
-		c.add(score_lab);
+		center_pan=new JPanel();
+		center_pan.setLayout(new GridLayout());
+		start_but=new JButton("开始游戏");
+		history_but=new JButton("历史记录");
+		help_but=new JButton("游戏帮助");
+		exit_but=new JButton("退出");
+		getbirdimage();
 		this.setVisible(true);
+	}
+	public void getbirdimage() {
+		for (int i = 0; i < 3; i++) {
+			birds_img[i]=new ImageIcon("image/"+i+".gif").getImage();
+		}
 	}
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		g.drawImage(back_img.getImage(), 0, 0, null);
+		g.drawImage(back_img.getImage(), 0, 0, this);
+	}
+	public void listener() {
+		exit_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
+		start_but.addActionListener(new ActionListener() {//存疑
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		help_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new HelpFrame();
+			}
+		});
+		help_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	//基本的界面框架是这样，然后在想需不需要弄一下根据窗口拖动大小变化的窗口
 }
