@@ -25,14 +25,15 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		try {
-			i=(i+1)%3;
-			repaint();
-			System.out.print(i);
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (true) {
+			try {
+				repaint();
+				i=(i+1)%3;
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public void openfile() {
