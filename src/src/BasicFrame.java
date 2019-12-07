@@ -33,6 +33,6 @@ public abstract class BasicFrame extends JFrame{
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		g.drawImage(getIconImage(), 0, 0, frame_width, frame_height, 0, 0, frame_width, frame_height, null);
+		g.drawImage(null, 0, 0, 0, 0, null);
 	}
 }
