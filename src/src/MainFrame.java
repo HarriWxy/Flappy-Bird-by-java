@@ -4,12 +4,18 @@ import java.awt.Desktop;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实现
 	int i=0;
+	int Bird_x=frame_width/3;//鸟的位置
+	int Bird_y=frame_height/2;//
+	ArrayList<Integer> uptube=new ArrayList<Integer>();//上面管子的y坐标
+	ArrayList<Integer> downtube=new ArrayList<Integer>();//下面管子的y坐标
+	//注意左上角为(0,0)坐标点。
 	public MainFrame() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -19,7 +25,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		g.drawImage(birds_img[i], frame_width/3, frame_height/2, this);
+		g.drawImage(birds_img[i], Bird_x, Bird_y, this);
 		
 	}
 	@Override
@@ -27,9 +33,10 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实
 		// TODO Auto-generated method stub
 		while (true) {
 			try {
-				repaint();
-				i=(i+1)%3;
+				Bird_y+=4;
+				i=(i+1)%4;
 				Thread.sleep(50);
+				repaint();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -47,7 +54,6 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实
 	}
 	public static void main(String[] args) {
 		MainFrame test=new MainFrame();
-//		test.openfile();
 	}
 
 }

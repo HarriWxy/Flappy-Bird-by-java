@@ -23,7 +23,7 @@ public abstract class BasicFrame extends JFrame{
 	JLabel score_lab;//得分标签,可以不用标签，用paint画出来
 	int frame_width=720,frame_height=1080;//界面的大小
 	ImageIcon back_img,pipe_img;//背景图片,鸟和管道
-	Image[]birds_img=new Image[3];
+	Image[]birds_img=new Image[4];
 	int score,hisscore;//得分和历史得分
 	JPanel center_pan;//中间按钮区域
 	JButton start_but,history_but,help_but,exit_but;
@@ -52,6 +52,7 @@ public abstract class BasicFrame extends JFrame{
 		for (int i = 0; i < 3; i++) {
 			birds_img[i]=new ImageIcon("image/"+i+".gif").getImage();
 		}
+		birds_img[3]=new ImageIcon("image/1.gif").getImage();
 	}
 	@Override
 	public void paint(Graphics g) {
