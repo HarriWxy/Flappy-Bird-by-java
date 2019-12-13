@@ -9,6 +9,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ public abstract class BasicFrame extends JFrame{
 	int score,hisscore;//得分和历史得分
 	JPanel center_pan;//中间按钮区域
 	JButton start_but,history_but,help_but,exit_but;
+	boolean runable=true;
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -46,7 +50,7 @@ public abstract class BasicFrame extends JFrame{
 		help_but=new JButton("游戏帮助");
 		exit_but=new JButton("退出");
 		getbirdimage();
-		this.setVisible(true);
+		
 	}
 	public void getbirdimage() {
 		for (int i = 0; i < 3; i++) {
@@ -61,6 +65,28 @@ public abstract class BasicFrame extends JFrame{
 		g.drawImage(back_img.getImage(), 0, 0, this);
 	}
 	public void listener() {
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				super.componentResized(e);
+				frame_height=getHeight();
+				frame_width=getWidth();
+				repaint();
+			}
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				super.componentHidden(e);
+				runable=false;
+			}
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				super.componentShown(e);
+				runable=true;
+			}
+		});
 		exit_but.addActionListener(new ActionListener() {
 			
 			@Override
