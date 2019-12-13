@@ -16,6 +16,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实
 	ArrayList<Integer> uptube=new ArrayList<Integer>();//上面管子的y坐标
 	ArrayList<Integer> downtube=new ArrayList<Integer>();//下面管子的y坐标
 	//注意左上角为(0,0)坐标点。
+	
 	public MainFrame() {
 		// TODO Auto-generated constructor stub
 		super();
