@@ -15,21 +15,21 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class MainFrame extends BasicFrame implements Runnable{//Ö÷ÒªµÄ³ÌĞò½çÃæÊµÏÖ
+public class MainFrame extends BasicFrame implements Runnable{//ä¸»è¦çš„ç¨‹åºç•Œé¢å®ç°
 	int i=0;
 	boolean flag=false;
-	int Bird_x=frame_width/3;//ÄñµÄÎ»ÖÃ
+	int Bird_x=frame_width/3;//é¸Ÿçš„ä½ç½®
 	int Bird_y=frame_height/2;//
-	ArrayList<Integer> uptube=new ArrayList<Integer>();//ÉÏÃæ¹Ü×ÓµÄy×ø±ê
-	ArrayList<Integer> downtube=new ArrayList<Integer>();//ÏÂÃæ¹Ü×ÓµÄy×ø±ê
-	//×¢Òâ×óÉÏ½ÇÎª(0,0)×ø±êµã¡£
+	ArrayList<Integer> uptube=new ArrayList<Integer>();//ä¸Šé¢ç®¡å­çš„yåæ ‡
+	ArrayList<Integer> downtube=new ArrayList<Integer>();//ä¸‹é¢ç®¡å­çš„yåæ ‡
+	//æ³¨æ„å·¦ä¸Šè§’ä¸º(0,0)åæ ‡ç‚¹ã€‚
 	
 	public MainFrame() {
 		// TODO Auto-generated constructor stub
 		super();
 		this.setVisible(true);
 		listener();
-		new Thread(this).start();//Ïß³Ì
+		new Thread(this).start();//çº¿ç¨‹
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -64,7 +64,7 @@ public class MainFrame extends BasicFrame implements Runnable{//Ö÷ÒªµÄ³ÌĞò½çÃæÊµ
 						repaint();
 					}
 					i=(i+1)%4;
-					Thread.sleep(50);
+					Thread.sleep(150);//é€Ÿåº¦è°ƒä½äº†ä¸€ç‚¹åŸæ¥æ˜¯50ç°åœ¨æ˜¯150
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
