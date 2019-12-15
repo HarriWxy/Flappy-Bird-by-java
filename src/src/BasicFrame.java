@@ -159,6 +159,11 @@ public abstract class BasicFrame extends JFrame{
 				score_jf.setTitle("当前得分和历史最高分");
 				FlowLayout fl=new FlowLayout(FlowLayout.LEFT,5,5); //流式布局 每个组件之间相隔5cm
 				score_jf.setLayout(fl);//设置顶级容器的布局为流式布局
+				ImageIcon icon=new ImageIcon("image/0.gif");//给界面设置个背景
+				JLabel labpic=new JLabel(icon);
+				Dimension dim1 = new Dimension(100,100);//设置大小
+				labpic.setPreferredSize(dim1);
+				score_jf.add(labpic);
 				Dimension dim = new Dimension(70,40);//设置大小
 				JLabel score_lb=new JLabel();
 				score_lb.setText("当前得分："+score);//当前得分标签
