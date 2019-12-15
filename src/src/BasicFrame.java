@@ -24,17 +24,17 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public abstract class BasicFrame extends JFrame{
 	Container c;
-	JLabel score_lab;//µÃ·Ö±êÇ©,¿ÉÒÔ²»ÓÃ±êÇ©£¬ÓÃpaint»­³öÀ´
-	int frame_width=720,frame_height=1080;//½çÃæµÄ´óĞ¡
-	ImageIcon back_img,pipe_img;//±³¾°Í¼Æ¬,ÄñºÍ¹ÜµÀ
+	JLabel score_lab;//å¾—åˆ†æ ‡ç­¾,å¯ä»¥ä¸ç”¨æ ‡ç­¾ï¼Œç”¨paintç”»å‡ºæ¥
+	int frame_width=720,frame_height=1080;//ç•Œé¢çš„å¤§å°
+	ImageIcon back_img,pipe_img;//èƒŒæ™¯å›¾ç‰‡,é¸Ÿå’Œç®¡é“
 	Image[]birds_img=new Image[4];
-	int score,hisscore;//µÃ·ÖºÍÀúÊ·µÃ·Ö
-	JPanel center_pan;//ÖĞ¼ä°´Å¥ÇøÓò
+	int score,hisscore;//å¾—åˆ†å’Œå†å²å¾—åˆ†
+	JPanel center_pan;//ä¸­é—´æŒ‰é’®åŒºåŸŸ
 	JButton start_but,history_but,help_but,exit_but;
 	boolean runable=true;
-	int Bird_x,Bird_y;//ÄñµÄÎ»ÖÃ
-	ArrayList<Integer> uptube=new ArrayList<Integer>();//ÉÏÃæ¹Ü×ÓµÄy×ø±ê
-	ArrayList<Integer> downtube=new ArrayList<Integer>();//ÏÂÃæ¹Ü×ÓµÄy×ø±ê
+	int Bird_x,Bird_y;//é¸Ÿçš„ä½ç½®
+	ArrayList<Integer> uptube=new ArrayList<Integer>();//ä¸Šé¢ç®¡å­çš„yåæ ‡
+	ArrayList<Integer> downtube=new ArrayList<Integer>();//ä¸‹é¢ç®¡å­çš„yåæ ‡
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -49,10 +49,10 @@ public abstract class BasicFrame extends JFrame{
 		score_lab.setLayout(new BorderLayout());
 		center_pan=new JPanel();
 		center_pan.setLayout(new GridLayout());
-		start_but=new JButton("¿ªÊ¼ÓÎÏ·");
-		history_but=new JButton("ÀúÊ·¼ÇÂ¼");
-		help_but=new JButton("ÓÎÏ·°ïÖú");
-		exit_but=new JButton("ÍË³ö");
+		start_but=new JButton("å¼€å§‹æ¸¸æˆ");
+		history_but=new JButton("å†å²è®°å½•");
+		help_but=new JButton("æ¸¸æˆå¸®åŠ©");
+		exit_but=new JButton("é€€å‡º");
 		getbirdimage();
 	}
 	public void getbirdimage() {
@@ -66,8 +66,8 @@ public abstract class BasicFrame extends JFrame{
 		// TODO Auto-generated method stub
 		super.paint(g);
 		g.drawImage(back_img.getImage(), 0, 0, this);
-		if (frame_width>back_img.getIconWidth()) {
-			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//¼ÓÁËÈç¹û½çÃæ·Å´óÖ®ºóÓÒ±ß²¹
+		if (frame_width>back_img.getIconWidth()) {       //(è²Œä¼¼å¯ä»¥ç”¨JFrame.setResizable(ture)æ›¿æ¢ï¼Œè¡¨ç¤ºå…è®¸ç”Ÿæˆçš„çª—ä½“æ”¹å˜å¤§å°)
+			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//åŠ äº†å¦‚æœç•Œé¢æ”¾å¤§ä¹‹åå³è¾¹è¡¥
 		}
 	}
 	public void listener() {
@@ -82,14 +82,14 @@ public abstract class BasicFrame extends JFrame{
 				repaint();
 			}
 			@Override
-			public void componentHidden(ComponentEvent e) {//µ±½çÃæ±»Òş²ØµÄÊ±ºò¾ÍÔİÍ£
+			public void componentHidden(ComponentEvent e) {//å½“ç•Œé¢è¢«éšè—çš„æ—¶å€™å°±æš‚åœ
 				// TODO Auto-generated method stub
 				super.componentHidden(e);
 				runable=false;
 				
 			}
 			@Override
-			public void componentShown(ComponentEvent e) {//½çÃæ³öÏÖ¾Í»Ö¸´£¬µ«ÊÇºÃÏñÃ»µÃÓÃ£¿¿´Ò»ÏÂÕâ¸ö¼àÌıÆ÷ÊÇÉ¶×ÓÓÃ
+			public void componentShown(ComponentEvent e) {//ç•Œé¢å‡ºç°å°±æ¢å¤ï¼Œä½†æ˜¯å¥½åƒæ²¡å¾—ç”¨ï¼Ÿçœ‹ä¸€ä¸‹è¿™ä¸ªç›‘å¬å™¨æ˜¯å•¥å­ç”¨
 				// TODO Auto-generated method stub
 				super.componentShown(e);
 				runable=true;
@@ -103,7 +103,7 @@ public abstract class BasicFrame extends JFrame{
 				dispose();
 			}
 		});
-		start_but.addActionListener(new ActionListener() {//´æÒÉ
+		start_but.addActionListener(new ActionListener() {//å­˜ç–‘
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -128,5 +128,5 @@ public abstract class BasicFrame extends JFrame{
 			}
 		});
 	}
-	//»ù±¾µÄ½çÃæ¿ò¼ÜÊÇÕâÑù£¬È»ºóÔÚÏëĞè²»ĞèÒªÅªÒ»ÏÂ¸ù¾İ´°¿ÚÍÏ¶¯´óĞ¡±ä»¯µÄ´°¿Ú
+	//åŸºæœ¬çš„ç•Œé¢æ¡†æ¶æ˜¯è¿™æ ·ï¼Œç„¶ååœ¨æƒ³éœ€ä¸éœ€è¦å¼„ä¸€ä¸‹æ ¹æ®çª—å£æ‹–åŠ¨å¤§å°å˜åŒ–çš„çª—å£
 }
