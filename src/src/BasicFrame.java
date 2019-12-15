@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,6 +32,9 @@ public abstract class BasicFrame extends JFrame{
 	JPanel center_pan;//中间按钮区域
 	JButton start_but,history_but,help_but,exit_but;
 	boolean runable=true;
+	int Bird_x,Bird_y;//鸟的位置
+	ArrayList<Integer> uptube=new ArrayList<Integer>();//上面管子的y坐标
+	ArrayList<Integer> downtube=new ArrayList<Integer>();//下面管子的y坐标
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -50,7 +54,6 @@ public abstract class BasicFrame extends JFrame{
 		help_but=new JButton("游戏帮助");
 		exit_but=new JButton("退出");
 		getbirdimage();
-		
 	}
 	public void getbirdimage() {
 		for (int i = 0; i < 3; i++) {
@@ -63,6 +66,9 @@ public abstract class BasicFrame extends JFrame{
 		// TODO Auto-generated method stub
 		super.paint(g);
 		g.drawImage(back_img.getImage(), 0, 0, this);
+		if (frame_width>back_img.getIconWidth()) {
+			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//加了如果界面放大之后右边补
+		}
 	}
 	public void listener() {
 		this.addComponentListener(new ComponentAdapter() {
@@ -72,16 +78,18 @@ public abstract class BasicFrame extends JFrame{
 				super.componentResized(e);
 				frame_height=getHeight();
 				frame_width=getWidth();
+				Bird_x=frame_width/3;
 				repaint();
 			}
 			@Override
-			public void componentHidden(ComponentEvent e) {
+			public void componentHidden(ComponentEvent e) {//当界面被隐藏的时候就暂停
 				// TODO Auto-generated method stub
 				super.componentHidden(e);
 				runable=false;
+				
 			}
 			@Override
-			public void componentShown(ComponentEvent e) {
+			public void componentShown(ComponentEvent e) {//界面出现就恢复，但是好像没得用？看一下这个监听器是啥子用
 				// TODO Auto-generated method stub
 				super.componentShown(e);
 				runable=true;

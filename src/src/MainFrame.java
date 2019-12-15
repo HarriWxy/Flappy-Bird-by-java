@@ -17,16 +17,14 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实现
 	int i=0;
-	boolean flag=false;
-	int Bird_x=frame_width/3;//鸟的位置
-	int Bird_y=frame_height/2;//
-	ArrayList<Integer> uptube=new ArrayList<Integer>();//上面管子的y坐标
-	ArrayList<Integer> downtube=new ArrayList<Integer>();//下面管子的y坐标
+	boolean jumpflag=false;
 	//注意左上角为(0,0)坐标点。
 	
 	public MainFrame() {
 		// TODO Auto-generated constructor stub
 		super();
+		Bird_x=frame_width/3;
+		Bird_y=frame_height/2;
 		this.setVisible(true);
 		listener();
 		new Thread(this).start();//线程
@@ -41,10 +39,10 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if (!Thread.interrupted()) {
+		if (runable) {
 			while (true) {
 				try {
-					if (!flag) {
+					if (!jumpflag) {
 						if (Bird_y<frame_height-54) {
 							Bird_y+=4;
 						}
@@ -60,11 +58,11 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						else {
 							Bird_y=35;
 						}
-						flag=false;
+						jumpflag=false;
 						repaint();
 					}
 					i=(i+1)%4;
-					Thread.sleep(150);//速度调低了一点原来是50现在是150
+					Thread.sleep(100);//速度调低了一点原来是50现在是100
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -90,7 +88,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				public void mouseClicked(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					super.mouseClicked(arg0);
-					flag=true;
+					jumpflag=true;
 				}
 			});
 		}
