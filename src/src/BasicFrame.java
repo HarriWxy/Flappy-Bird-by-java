@@ -120,7 +120,7 @@ public abstract class BasicFrame extends JFrame{
 			}
 		});
 		help_but.addActionListener(new ActionListener() {
-			
+			//我不是很懂为什么有两个help监听器
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
