@@ -39,9 +39,9 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if (runable) {
-			while (true) {
-				try {
+		while (true) {
+			try {
+				if (runable) {
 					if (!jumpflag) {
 						if (Bird_y<frame_height-54) {
 							Bird_y+=4;
@@ -58,16 +58,16 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						else {
 							Bird_y=35;
 						}
-						jumpflag=false;
-						repaint();
+							jumpflag=false;
+							repaint();
 					}
 					i=(i+1)%4;
+				}
 					Thread.sleep(100);//速度调低了一点原来是50现在是100
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
 		}
 	}
 	public void openfile() {
