@@ -18,5 +18,12 @@ public class WriteHistory {
             output.println(score);//第一行写当前得分
             output.println(hisscore);//第二行写历史最高分
         }
+        else{
+            Scanner input=new Scanner(file);
+            int temp=input.nextInt();
+            hisscore=input.nextInt();
+            output.println(score);
+            output.println(hisscore);
+        }
     }
 }
