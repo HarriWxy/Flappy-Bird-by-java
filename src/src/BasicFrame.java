@@ -66,7 +66,7 @@ public abstract class BasicFrame extends JFrame{
 		// TODO Auto-generated method stub
 		super.paint(g);
 		g.drawImage(back_img.getImage(), 0, 0, this);
-		if (frame_width>back_img.getIconWidth()) {       //(貌似可以用JFrame.setResizable(ture)替换，表示允许生成的窗体改变大小)
+		if (frame_width>back_img.getIconWidth()) {      
 			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//加了如果界面放大之后右边补
 		}
 	}
