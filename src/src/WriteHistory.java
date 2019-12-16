@@ -18,6 +18,7 @@ public class WriteHistory {
             output.println(score);//第一行写当前得分
             output.println(hisscore);//第二行写历史最高分
         }
+        //如果当前得分小于历史最高分，则读取历史最高分然后和当前得分一起写入文件
         else{
             Scanner input=new Scanner(file);
             int temp=input.nextInt();
