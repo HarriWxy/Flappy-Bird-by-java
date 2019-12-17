@@ -12,7 +12,7 @@ public class WriteHistory {
         this.score=score;
     }
     public void write() throws Exception {
-        File file= new File("C:\\Users\\some people\\Desktop\\Flappy-Bird-by-java-degree2\\src\\src\\flappybird hisscore.txt");
+        File file= new File("flappybird hisscore.txt");
         Scanner input=new Scanner(file);
         while (input.hasNextLine()){
             his_score.add(input.nextInt());//读取已有的历史记录
