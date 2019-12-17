@@ -1,31 +1,35 @@
 package src;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WriteHistory {
     //写历史记录
-    private int score;
-    private int hisscore;
-    WriteHistory(int score,int hisscore){
+    private Integer score;
+    private ArrayList<Integer> his_score=new ArrayList<>();//存已有的历史记录，已有的历史记录为降序
+    WriteHistory(int score){
         this.score=score;
-        this.hisscore=hisscore;
     }
-    public void write() throws FileNotFoundException {
-        File file= new File("flappybird hisscore");
+    public void write() throws Exception {
+        File file= new File("C:\\Users\\some people\\Desktop\\Flappy-Bird-by-java-degree2\\src\\src\\flappybird hisscore.txt");
+        Scanner input=new Scanner(file);
+        while (input.hasNextLine()){
+            his_score.add(input.nextInt());//读取已有的历史记录
+        }
         PrintWriter output=new PrintWriter(file);
-        if(score>hisscore) {
-            output.println(score);//第一行写当前得分
-            output.println(hisscore);//第二行写历史最高分
+        int n=0;//标记是否插入最新记录
+        for(int i=0;i<his_score.size();i++){
+            //通过比较大小找到位置插入最新记录
+            if(score>his_score.get(i)&n==0) {
+                output.println(score);
+                n=1;
+                i--;
+            }
+            else
+                output.println(his_score.get(i));//输出历史记录
         }
-        //如果当前得分小于历史最高分，则读取历史最高分然后和当前得分一起写入文件
-        else{
-            Scanner input=new Scanner(file);
-            int temp=input.nextInt();
-            hisscore=input.nextInt();
-            output.println(score);
-            output.println(hisscore);
-        }
+        input.close();
+        output.close();
     }
 }
