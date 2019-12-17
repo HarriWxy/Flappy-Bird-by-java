@@ -162,7 +162,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 			history_but.addActionListener(new ActionListener() {//历史记录监听器
 				@Override
 				public void actionPerformed(ActionEvent actionEvent) {
-//					new HistoryFrame(0,0);
+//					new HistoryFrame(0);
 				}
 			});
 		}
