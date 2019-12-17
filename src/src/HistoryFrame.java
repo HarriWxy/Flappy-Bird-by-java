@@ -40,7 +40,6 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 //		else{
 //			try {
 //				Scanner input=new Scanner(hisfile);
-//				score=input.nextInt();
 //				hisscore=input.nextInt();
 //			} catch (FileNotFoundException e) {
 //				e.printStackTrace();
