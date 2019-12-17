@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,13 +35,17 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		score_lab=new JLabel();
 		score_lab.setOpaque(false);
 		score_lab.setSize(new Dimension(40,40));
-		score_lab.setLayout(new GridLayout(1,2));
+		score_lab.setLayout(new GridLayout(2,1));
 		score_lab.setOpaque(false);
 		center_pan=new JPanel(new GridLayout(4,1));
 		start_but=new JButton("开始游戏");
+//		start_but.setSize(new Dimension(10,50));
 		history_but=new JButton("历史记录");
+//		history_but.setSize(new Dimension(10,50));
 		help_but=new JButton("游戏帮助");
+//		help_but.setSize(new Dimension(10,50));
 		exit_but=new JButton("退出");
+//		exit_but.setSize(new Dimension(10,50));
 		center_pan.add(start_but);
 		center_pan.add(help_but);
 		center_pan.add(history_but);
@@ -72,7 +77,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		}
 		else {
 			center_pan.setOpaque(false);
-			center_pan.setBounds(100, 100, 100, 500);
+			center_pan.setBounds(frame_width/2-100, 100, 200, 500);
 			c.add(center_pan);
 			validate();
 		}
@@ -82,7 +87,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		// TODO Auto-generated method stub
 		while (true) {
 			try {
-				if (runable) {
+				if (runable&playing) {
 					if (!jumpflag) {
 						if (Bird_y<frame_height-54) {
 							Bird_y+=4;
@@ -148,6 +153,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					removeAll();
 					runable=true;
 					playing=true;
+					now=new Date();
 					repaint();
 				}
 			});

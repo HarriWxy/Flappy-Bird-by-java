@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -32,12 +33,14 @@ public abstract class BasicFrame extends JFrame{
 	int Bird_x,Bird_y;//鸟的位置
 	ArrayList<Integer> uptube;//上面管子的y坐标
 	ArrayList<Integer> downtube;//下面管子的y坐标
+	ArrayList<Integer> xtube;//管子的横坐标
+	Date now;//在开始游戏的按钮触发
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		c=this.getContentPane();
-		c.setLayout(new BorderLayout());
+		c.setLayout(null);
 		back_img=new ImageIcon("image/bg.jpg");
 		this.setSize(frame_width, frame_height);
 		this.setLocationRelativeTo(null);//居中
