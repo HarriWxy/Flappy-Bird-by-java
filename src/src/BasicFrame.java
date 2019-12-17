@@ -2,31 +2,20 @@ package src;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.UIManager;
 
 
 @SuppressWarnings("serial")
@@ -38,11 +27,10 @@ public abstract class BasicFrame extends JFrame{
 	Image[]birds_img=new Image[4];
 	int score,hisscore;//得分和历史得分
 	JPanel center_pan;//中间按钮区域
-	JButton start_but,history_but,help_but,exit_but;
 	boolean runable=true;
 	int Bird_x,Bird_y;//鸟的位置
-	ArrayList<Integer> uptube=new ArrayList<Integer>();//上面管子的y坐标
-	ArrayList<Integer> downtube=new ArrayList<Integer>();//下面管子的y坐标
+	ArrayList<Integer> uptube;//上面管子的y坐标
+	ArrayList<Integer> downtube;//下面管子的y坐标
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -51,23 +39,13 @@ public abstract class BasicFrame extends JFrame{
 		c.setLayout(new BorderLayout());
 		back_img=new ImageIcon("image/bg.jpg");
 		this.setSize(frame_width, frame_height);
-		score_lab=new JLabel();
-		score_lab.setOpaque(false);
-		score_lab.setSize(new Dimension(40,40));
-		score_lab.setLayout(new BorderLayout());
-		center_pan=new JPanel();
-		center_pan.setLayout(new GridLayout());
-		start_but=new JButton("开始游戏");
-		history_but=new JButton("历史记录");
-		help_but=new JButton("游戏帮助");
-		exit_but=new JButton("退出");
-		getbirdimage();
-	}
-	public void getbirdimage() {
-		for (int i = 0; i < 3; i++) {
-			birds_img[i]=new ImageIcon("image/"+i+".gif").getImage();
+		this.setLocationRelativeTo(null);//居中
+		this.setFont(new Font("宋体",Font.PLAIN,14));//宋体 14号
+		try {
+		      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) { 
+			e.printStackTrace();
 		}
-		birds_img[3]=new ImageIcon("image/1.gif").getImage();
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -104,35 +82,6 @@ public abstract class BasicFrame extends JFrame{
 				runable=true;
 			}
 		});
-		exit_but.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				dispose();
-			}
-		});
-		start_but.addActionListener(new ActionListener() {//存疑
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		help_but.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				new HelpFrame();
-			}
-		});
-		history_but.addActionListener(new ActionListener() {//历史记录监听器
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-			}
-		});
+		
 	}
-	//基本的界面框架是这样，然后在想需不需要弄一下根据窗口拖动大小变化的窗口
 }
