@@ -25,7 +25,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 	public HistoryFrame(int score, int hisscore) {
 		// TODO Auto-generated constructor stub
 		setTitle("FlappyBird History");
-//		File hisfile=new File("flappybird hisscore");
+//		File hisfile=new File("flappybird hisscore.txt");
 //		if(!hisfile.exists()){
 //			try {
 //				PrintWriter output=new PrintWriter(hisfile);
