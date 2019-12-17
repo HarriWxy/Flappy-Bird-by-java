@@ -23,11 +23,12 @@ public abstract class BasicFrame extends JFrame{
 	Container c;
 	JLabel score_lab;//得分标签,可以不用标签，用paint画出来
 	int frame_width=720,frame_height=1080;//界面的大小
-	ImageIcon back_img,pipe_img;//背景图片,鸟和管道
-	Image[]birds_img=new Image[4];
+	ImageIcon back_img;//背景图片
+	Image[]birds_img;//鸟照片
+	Image[]pipe_img;
 	int score,hisscore;//得分和历史得分
 	JPanel center_pan;//中间按钮区域
-	boolean runable=true;
+	boolean runable=false;
 	int Bird_x,Bird_y;//鸟的位置
 	ArrayList<Integer> uptube;//上面管子的y坐标
 	ArrayList<Integer> downtube;//下面管子的y坐标
