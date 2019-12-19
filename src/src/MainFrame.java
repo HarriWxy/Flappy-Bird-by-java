@@ -56,6 +56,9 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		center_pan.add(exit_but);
 		downtube=new ArrayList<Integer>();//下面管子的y坐标
 		uptube=new ArrayList<Integer>();//上面管子的y坐标
+		xtube=new ArrayList<>();
+		uptube.add((int)Math.round(600*Math.random())-30-600);
+		downtube.add((int)Math.round(600*Math.random())+20);
 		Bird_x=frame_width/3;
 		Bird_y=frame_height/2;
 		this.setVisible(true);
@@ -77,13 +80,16 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		// TODO Auto-generated method stub
 		super.paint(g);
 		if (playing) {
-			g.drawImage(back_img.getImage(), back_x, 0, this);
-			g.drawImage(back_img.getImage(), back_img.getIconWidth()+back_x, 0, this);
-			if (frame_width>back_img.getIconWidth()) {      
-				g.drawImage(back_img.getImage(), 2*back_img.getIconWidth()+back_x, 0, this);//加了如果界面放大之后右边补
-				
+			for (int i = 0; i < frame_width/720+2; i++) {
+				g.drawImage(back_img.getImage(), back_x+720*i, 0, this);
 			}
 			g.drawImage(birds_img[i], Bird_x, Bird_y, this);
+//			for (int i = 0; i < xtube.size(); i++) {
+				g.drawImage(pipe_img[0], back_x+720, 32, this);
+//				g.drawImage(pipe_img[0], xtube.get(i), uptube.get(i), this);
+//				g.drawImage(pipe_img[1], xtube.get(i), uptube.get(i), this);
+//				xtube.set(i, xtube.get(i)-back_x);
+//			}
 		}
 		else {
 			center_pan.setOpaque(false);
@@ -108,18 +114,14 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					if (wait%5==0) {
 						double up=Math.random();
 						if (up<0.5) {
-							uptube.add((int)Math.round((frame_height*Math.random()/2)));
+							uptube.add((int)Math.round(600*Math.random())-30-600);
 						}
 						else {
-							downtube.add(frame_height-(int)Math.round((frame_height*Math.random()/2)));
+							downtube.add((int)Math.round(600*Math.random())+20);
 						}
-//						xtube.add(1);
+//						xtube.add((int)frame_width);
 					}
-//					xtube.add(frame_width);
-					back_x-=10;
-					if (back_x==-720) {
-						back_x=frame_width;
-					}
+					back_x=(back_x-10)%720;
 					repaint();
 					i=(i+1)%4;
 					wait++;
