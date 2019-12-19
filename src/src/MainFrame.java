@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -23,6 +26,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实现
 	int i=0;
+	int back_x=0;
 	boolean jumpflag=false;
 	boolean playing=false;
 	//注意左上角为(0,0)坐标点。
@@ -73,6 +77,12 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		// TODO Auto-generated method stub
 		super.paint(g);
 		if (playing) {
+			g.drawImage(back_img.getImage(), back_x, 0, this);
+			g.drawImage(back_img.getImage(), back_img.getIconWidth()+back_x, 0, this);
+			if (frame_width>back_img.getIconWidth()) {      
+				g.drawImage(back_img.getImage(), 2*back_img.getIconWidth()+back_x, 0, this);//加了如果界面放大之后右边补
+				
+			}
 			g.drawImage(birds_img[i], Bird_x, Bird_y, this);
 		}
 		else {
@@ -85,30 +95,36 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		int wait=0;
 		while (true) {
 			try {
 				if (runable&playing) {
-					if (!jumpflag) {
-						if (Bird_y<frame_height-54) {
-							Bird_y+=4;
-						}
-						else {
-							Bird_y=frame_height-50;
-						}
-						repaint();
+					if (Bird_y<frame_height-54) {
+						Bird_y+=4;
 					}
 					else {
-						if (Bird_y>65) {
-							Bird_y-=35;
+						Bird_y=frame_height-50;
+					}
+					if (wait%5==0) {
+						double up=Math.random();
+						if (up<0.5) {
+							uptube.add((int)Math.round((frame_height*Math.random()/2)));
 						}
 						else {
-							Bird_y=35;
+							downtube.add(frame_height-(int)Math.round((frame_height*Math.random()/2)));
 						}
-							jumpflag=false;
-							repaint();
+//						xtube.add(1);
 					}
+//					xtube.add(frame_width);
+					back_x-=10;
+					if (back_x==-720) {
+						back_x=frame_width;
+					}
+					repaint();
 					i=(i+1)%4;
+					wait++;
 				}
+					
 					Thread.sleep(100);//速度调低了一点原来是50现在是100
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -129,12 +145,40 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		public void listener() {
 			// TODO Auto-generated method stub
 			super.listener();
+			this.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					// TODO Auto-generated method stub
+					super.keyTyped(arg0);
+					if (arg0.getKeyChar()=='p') {//暂停按钮
+						playing=!playing;
+					}
+					if (arg0.getKeyChar()==' ') {
+						if (Bird_y>65) {
+							Bird_y-=35;
+						}
+						else {
+							Bird_y=35;
+						}
+						repaint();
+					}
+					else {
+						
+					}
+				}
+			});
 			this.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					super.mouseClicked(arg0);
-					jumpflag=true;
+					if (Bird_y>65) {
+						Bird_y-=35;
+					}
+					else {
+						Bird_y=35;
+					}
+					repaint();
 				}
 			});
 			exit_but.addActionListener(new ActionListener() {

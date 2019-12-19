@@ -68,7 +68,9 @@ public abstract class BasicFrame extends JFrame{
 				super.componentResized(e);
 				frame_height=getHeight();
 				frame_width=getWidth();
-				Bird_x=frame_width/3;
+				if (frame_width<720) {
+					Bird_x=frame_width/3;
+				}
 				repaint();
 			}
 		});
