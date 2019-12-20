@@ -69,7 +69,6 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		this.setVisible(true);
 		getimages();
 		listener();
-		gethisscore();
 		new Thread(this).start();//线程
 	}
 	public void getimages() {
@@ -132,8 +131,8 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						Bird_y=frame_height-50;
 					}
 					if (wait%20==0) {
-						uptube.add((int)Math.round(frame_height*Math.random()/2)-30-600);
-						downtube.add((int)Math.round(600*Math.random())+frame_height/2+20);
+						uptube.add((int)Math.round(frame_height*Math.random()/2)-570);
+						downtube.add((int)Math.round(300*Math.random())+frame_height/2+20);
 						xtube.add((int)frame_width);
 					}
 					back_x=(back_x-10)%720;
@@ -192,23 +191,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		repaint();
 		paintbird=false;
 	}
-	private void gethisscore() {
-		File file= new File("flappybird hisscore.txt");
-		if (!file.exists()) {
-			hisscore=0;
-		}
-		else {
-			try {
-				Scanner input=new Scanner(file);
-				hisscore=Integer.valueOf(input.nextLine().substring(29));
-				input.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-        
-	}
+	
 	@Override
 	public void listener() {
 		// TODO Auto-generated method stub
@@ -242,7 +225,6 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				exitthread=true;
 				dispose();
 			}
 		});

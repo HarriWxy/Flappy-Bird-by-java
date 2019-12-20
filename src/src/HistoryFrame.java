@@ -98,7 +98,4 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 				}
 			});
 		}
-	public static void main(String[] args) {
-		new HistoryFrame();
-	} 
 }

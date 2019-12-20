@@ -2,11 +2,10 @@ package src;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -14,7 +13,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -67,8 +65,6 @@ public class HelpFrame extends BasicFrame implements Runnable{
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-//		g.drawString("点击鼠标和空格跳跃，按p暂停", x, y);    //提示，x,y是坐标
-		//提示得分
 		for (int i = 0; i < frame_width/720+2; i++) {//画背景
 			g.drawImage(back_img.getImage(), back_x+720*i, 0, this);
 		}
@@ -79,12 +75,18 @@ public class HelpFrame extends BasicFrame implements Runnable{
 				g.drawImage(pipe_img[1], xtube.get(i), downtube.get(i), this);
 			}
 		}
+		g.setFont(new Font("宋体",Font.PLAIN,30));
+		g.drawString("历史最高分:"+hisscore, 40, 60);
+		g.drawString("当前得分:"+score, 40, 90);
+		g.drawString("点击鼠标和空格跳跃，按p暂停", 40, 120);  
+		g.drawString("当通过一个一个管道后得分会增加", 40, 150); 
 	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		int wait=0;
 		int cl=0;
+		score=0;
 		while (true) {
 			try {
 					if (Bird_y<frame_height-54) {
@@ -94,20 +96,21 @@ public class HelpFrame extends BasicFrame implements Runnable{
 						Bird_y=frame_height-50;
 					}
 					if (wait%20==0) {
-						uptube.add((int)Math.round(frame_height*Math.random()/2)-30-600);
-						downtube.add((int)Math.round(600*Math.random())+frame_height/2+20);
+						uptube.add((int)Math.round(frame_height*Math.random()/2)-570);
+						downtube.add((int)Math.round(300*Math.random())+frame_height/2+20);
 						xtube.add((int)frame_width);
 					}
 					back_x=(back_x-10)%720;
 					cl=(cl+5)%frame_width;
 					for (int i = 0; i < xtube.size()-1; i++) {
+						if (xtube.get(i)+140>=Bird_x-10 &xtube.get(i)+140<Bird_x) {
+							score++;
+						}
 						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
 							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
 								 int m=JOptionPane.showConfirmDialog(this, "返回主界面？" ,"Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-								 
 								 if (m==0) {
 									 dispose();
-									 exitthread=true;
 								}
 								 else {
 									score=0;

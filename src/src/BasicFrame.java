@@ -9,8 +9,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -51,6 +54,7 @@ public abstract class BasicFrame extends JFrame{
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		gethisscore();
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -60,6 +64,23 @@ public abstract class BasicFrame extends JFrame{
 		if (frame_width>back_img.getIconWidth()) {      
 			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//加了如果界面放大之后右边补
 		}
+	}
+	private void gethisscore() {
+		File file= new File("flappybird hisscore.txt");
+		if (!file.exists()) {
+			hisscore=0;
+		}
+		else {
+			try {
+				Scanner input=new Scanner(file);
+				hisscore=Integer.valueOf(input.nextLine().substring(29));
+				input.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        
 	}
 	public void listener() {
 		this.addComponentListener(new ComponentAdapter() {
@@ -87,6 +108,11 @@ public abstract class BasicFrame extends JFrame{
 				// TODO Auto-generated method stub
 				super.windowActivated(e);
 				runable=true;
+			}
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				super.windowClosed(e);
+				exitthread=true;
 			}
 		});
 		
