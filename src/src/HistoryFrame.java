@@ -26,7 +26,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 	JLabel labpic=new JLabel(icon);
 	public HistoryFrame() {
 		// TODO Auto-generated constructor stub
-		File hisfile = new File("/flappybird hisscore.txt");
+		File hisfile = new File("flappybird hisscore.txt");
 		if (!hisfile.exists()) {
 			try {
 				PrintWriter output = new PrintWriter(hisfile);
@@ -69,7 +69,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 
 		this.setSize(500,500);//设置窗口大小
 		this.setLocationRelativeTo(null);//居中
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());//设置顶层为Border布局
 		this.add(scrollPane,BorderLayout.CENTER);//滚动界面位置
 

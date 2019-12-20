@@ -15,9 +15,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,11 +34,13 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	boolean jumpflag=false;
 	boolean playing=false;
 	boolean paintbird=false;
+	WriteHistory his_wri;
 	//注意左上角为(0,0)坐标点。
 	JButton start_but,history_but,help_but,exit_but;
 	public MainFrame() {
 		// TODO Auto-generated constructor stub
 		super();
+		his_wri=new WriteHistory();
 		birds_img=new Image[4];
 		pipe_img=new Image[2];
 		score_lab=new JLabel();
@@ -65,6 +69,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		this.setVisible(true);
 		getimages();
 		listener();
+		gethisscore();
 		new Thread(this).start();//线程
 	}
 	public void getimages() {
@@ -103,6 +108,14 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 			validate();
 		}
 	}
+	public void write_his() {
+		hisscore=hisscore>score?hisscore:score;
+		his_wri.write(score, now);
+		score=0;
+		uptube.clear();
+		downtube.clear();
+		xtube.clear();
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -132,18 +145,15 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
 							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
 								 playing=false;
-								 new WriteHistory(score, now);
 								 int m=JOptionPane.showConfirmDialog(this, "是否重新开始？", "Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-								 score=0;
 								 if (m==0) {
-									uptube.clear();
-									downtube.clear();
-									xtube.clear();
+									write_his();
 									playing=true;
-									
+									now=new Date();
 								}
 								 else {
-									
+									 write_his();
+									 playing=false;
 								}
 								 repaint();
 								 break;
@@ -181,7 +191,21 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		paintbird=false;
 	}
 	private void gethisscore() {
-		
+		File file= new File("flappybird hisscore.txt");
+		if (!file.exists()) {
+			hisscore=0;
+		}
+		else {
+			try {
+				Scanner input=new Scanner(file);
+				hisscore=Integer.valueOf(input.nextLine().substring(29));
+				input.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        
 	}
 	@Override
 	public void listener() {
