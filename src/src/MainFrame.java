@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实现
+public class MainFrame extends BasicFrame implements Runnable{//主要的程序界面实现,主类
 	int i=0;
 	int back_x=0;//背景的相对位移
 	boolean jumpflag=false;//鸟是否在跳跃

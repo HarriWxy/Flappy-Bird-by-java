@@ -189,7 +189,4 @@ public class HelpFrame extends BasicFrame implements Runnable{
 			});
 		}
 
-	public static void main(String[] args) {
-		MainFrame test=new MainFrame();
-	}
 }
