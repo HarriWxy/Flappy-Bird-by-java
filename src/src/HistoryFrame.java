@@ -61,7 +61,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 		scrollPane.setViewportView(jList);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);//设置需要时显示竖向滚动条
 		scrollPane.setWheelScrollingEnabled(true);//响应鼠标滚动
-		scrollPane.add(labpic);//想让滚动界面也有背景，但不知道为什么没弄成
+		//设置透明不知道为什么也不行
 		scrollPane.setBorder(new EmptyBorder(5,5,5,5));//设置边框
 		
 		this.setTitle("FlappyBird历史排行");//设置标题
@@ -75,7 +75,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 		JPanel bottom_pan=new JPanel(new FlowLayout());
 		bottom_pan.setOpaque(false);
 		bottom_pan.add(back_but);
-		this.add(bottom_pan,BorderLayout.NORTH);//设置返回按钮在上中
+		this.add(bottom_pan,BorderLayout.South);//设置返回按钮在上中
 		this.validate();
 		this.setVisible(true);
 		listener();
