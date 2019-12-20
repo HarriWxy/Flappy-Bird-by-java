@@ -35,6 +35,7 @@ public abstract class BasicFrame extends JFrame{
 	ArrayList<Integer> downtube;//下面管子的y坐标
 	ArrayList<Integer> xtube;//管子的横坐标
 	Date now;//在开始游戏的按钮触发
+	boolean exitthread=false;
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");

@@ -170,7 +170,9 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					i=(i+1)%4;
 					wait++;
 				}
-					
+					if (exitthread) {
+						break;
+					}
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -240,6 +242,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				exitthread=true;
 				dispose();
 			}
 		});

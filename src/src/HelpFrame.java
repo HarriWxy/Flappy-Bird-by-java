@@ -18,6 +18,7 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +34,8 @@ public class HelpFrame extends BasicFrame implements Runnable{
 	public HelpFrame() {
 		// TODO Auto-generated constructor stub
 		super();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("Flappy Bird Help");
 		birds_img=new Image[4];
 		pipe_img=new Image[2];
 		score_lab=new JLabel();
@@ -41,7 +44,6 @@ public class HelpFrame extends BasicFrame implements Runnable{
 		score_lab.setLayout(new GridLayout(2,1));
 		score_lab.setOpaque(false);
 		center_pan=new JPanel(new GridLayout(4,1));
-		back_but=new JButton("返回");
 		downtube=new ArrayList<Integer>();//下面管子的y坐标
 		uptube=new ArrayList<Integer>();//上面管子的y坐标
 		xtube=new ArrayList<>();	
@@ -85,7 +87,6 @@ public class HelpFrame extends BasicFrame implements Runnable{
 		int cl=0;
 		while (true) {
 			try {
-				if (runable&playing) {
 					if (Bird_y<frame_height-54) {
 						Bird_y+=4;
 					}
@@ -102,16 +103,17 @@ public class HelpFrame extends BasicFrame implements Runnable{
 					for (int i = 0; i < xtube.size()-1; i++) {
 						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
 							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
-								 playing=false;
-								 int m=JOptionPane.showConfirmDialog(this, "是否结束" ，"Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								 int m=JOptionPane.showConfirmDialog(this, "返回主界面？" ,"Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 								 
 								 if (m==0) {
+									 dispose();
+									 exitthread=true;
+								}
+								 else {
+									score=0;
 									uptube.clear();
 									downtube.clear();
 									xtube.clear();
-								}
-								 else {
-									
 								}
 								 repaint();
 								 break;
@@ -127,7 +129,9 @@ public class HelpFrame extends BasicFrame implements Runnable{
 					repaint();
 					i=(i+1)%4;
 					wait++;
-				}
+					if (exitthread) {
+						break;
+					}
 					
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
