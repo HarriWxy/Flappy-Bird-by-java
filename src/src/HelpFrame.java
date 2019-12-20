@@ -22,7 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class HelpFrame extends BasicFrame implements Runnable{
+public class HelpFrame extends BasicFrame implements Runnable{ 
+	//帮助界面，主要就是重复了一下主要的界面的线程
 	int i=0;
 	int back_x=0;
 	boolean playing=true;

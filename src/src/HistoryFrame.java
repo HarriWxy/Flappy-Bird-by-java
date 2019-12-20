@@ -14,9 +14,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class HistoryFrame extends BasicFrame{//得分纪录界面
+public class HistoryFrame extends BasicFrame{//得分纪录界面，这个界面中显示出所有历史记录
 
-	private ArrayList<Integer> his_score = new ArrayList<Integer>();
+	private ArrayList<String> his_score = new ArrayList<String>();
 	private Date date=new Date();
 	JButton back_but=new JButton("返回");
 
@@ -40,9 +40,8 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 			try {
 				Scanner input = new Scanner(hisfile);
 				while(input.hasNext()) {
-					this.his_score.add(Integer.valueOf(input.nextLine().substring(29)));
+					this.his_score.add(input.nextLine());
 				}
-				this.hisscore=his_score.get(0);
 				input.close();
 			} catch (FileNotFoundException var11) {
 				var11.printStackTrace();
@@ -67,7 +66,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 		
 		this.setTitle("FlappyBird历史排行");//设置标题
 
-		this.setSize(500,500);//设置窗口大小
+		this.setSize(500,1000);//设置窗口大小
 		this.setLocationRelativeTo(null);//居中
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());//设置顶层为Border布局
@@ -82,7 +81,15 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 		listener();
 
 	}
-
+	@Override
+		public void paint(Graphics g) {
+			// TODO Auto-generated method stub
+			super.paint(g);
+			g.drawImage(back_img.getImage(), 0, 0, this);
+			if (frame_width>back_img.getIconWidth()) {      
+				g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//加了如果界面放大之后右边补
+			}
+		}
 
 
 	@Override

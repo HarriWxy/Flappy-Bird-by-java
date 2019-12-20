@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public abstract class BasicFrame extends JFrame{
-	//基本的界面，包括游戏的背景、窗口监听器、图片的加载等基本元素
+	//基本的界面，包括游戏的窗口监听器、图片的加载等基本元素
 	Container c;
 	int frame_width=720,frame_height=1080;//默认的界面的大小
 	ImageIcon back_img;//背景图片
@@ -37,8 +37,8 @@ public abstract class BasicFrame extends JFrame{
 	ArrayList<Integer> uptube;//上面管子的y坐标
 	ArrayList<Integer> downtube;//下面管子的y坐标
 	ArrayList<Integer> xtube;//管子的横坐标
-	Date now;//在开始游戏的按钮触发
-	boolean exitthread=false;
+	Date now;//在开始游戏的按钮触发，用于日志的记录时间
+	boolean exitthread=false;//线程结束的标志
 	public BasicFrame() {
 		// TODO Auto-generated constructor stub
 		super("Flappy Bird");
@@ -46,26 +46,17 @@ public abstract class BasicFrame extends JFrame{
 		c=this.getContentPane();
 		c.setLayout(null);
 		back_img=new ImageIcon("image/bg.jpg");
-		this.setSize(frame_width, frame_height);
+		this.setSize(frame_width, frame_height);//设置窗口基本情况
 		this.setLocationRelativeTo(null);//居中
 		this.setFont(new Font("宋体",Font.PLAIN,14));//宋体 14号
 		try {
 		      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) { 
 			e.printStackTrace();
-		}
-		gethisscore();
+		}//设置窗口跟随系统样式
+		gethisscore();//获取历史最高分
 	}
-	@Override
-	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paint(g);
-		g.drawImage(back_img.getImage(), 0, 0, this);
-		if (frame_width>back_img.getIconWidth()) {      
-			g.drawImage(back_img.getImage(), back_img.getIconWidth(), 0, this);//加了如果界面放大之后右边补
-		}
-	}
-	private void gethisscore() {
+	private void gethisscore() {//获取文件中的历史最高分
 		File file= new File("flappybird hisscore.txt");
 		if (!file.exists()) {
 			hisscore=0;
@@ -82,10 +73,10 @@ public abstract class BasicFrame extends JFrame{
 		}
         
 	}
-	public void listener() {
-		this.addComponentListener(new ComponentAdapter() {
+	public void listener() {  //监听器
+		this.addComponentListener(new ComponentAdapter() {  
 			@Override
-			public void componentResized(ComponentEvent e) {
+			public void componentResized(ComponentEvent e) {//窗口改变大小
 				// TODO Auto-generated method stub
 				super.componentResized(e);
 				frame_height=getHeight();
@@ -96,20 +87,20 @@ public abstract class BasicFrame extends JFrame{
 				repaint();
 			}
 		});
-		this.addWindowListener(new WindowAdapter() {
+		this.addWindowListener(new WindowAdapter() {//窗口事件监听器
 			@Override
-			public void windowDeactivated(WindowEvent e) {
+			public void windowDeactivated(WindowEvent e) {//使得线程不执行
 				// TODO Auto-generated method stub
 				super.windowDeactivated(e);
 				runable=false;
 			}
 			@Override
-			public void windowActivated(WindowEvent e) {
+			public void windowActivated(WindowEvent e) {//线程恢复执行
 				// TODO Auto-generated method stub
 				super.windowActivated(e);
 				runable=true;
 			}
-			public void windowClosed(WindowEvent e) {
+			public void windowClosed(WindowEvent e) {//线程退出
 				// TODO Auto-generated method stub
 				super.windowClosed(e);
 				exitthread=true;
