@@ -57,8 +57,9 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		downtube=new ArrayList<Integer>();//下面管子的y坐标
 		uptube=new ArrayList<Integer>();//上面管子的y坐标
 		xtube=new ArrayList<>();
-		uptube.add((int)Math.round(600*Math.random())-30-600);
-		downtube.add((int)Math.round(600*Math.random())+20);
+//		uptube.add((int)Math.round(600*Math.random())-30-600);
+//		downtube.add((int)Math.round(600*Math.random())+20);
+		
 		Bird_x=frame_width/3;
 		Bird_y=frame_height/2;
 		this.setVisible(true);
@@ -72,7 +73,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		}
 		birds_img[3]=new ImageIcon("image/1.gif").getImage();
 		for (int i = 0; i < 2; i++) {
-			pipe_img[i]=new ImageIcon("image/pic"+i+".png").getImage();
+			pipe_img[i]=new ImageIcon("image/pic"+(i+1)+".png").getImage();
 		}
 	}
 	@Override
@@ -84,12 +85,10 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				g.drawImage(back_img.getImage(), back_x+720*i, 0, this);
 			}
 			g.drawImage(birds_img[i], Bird_x, Bird_y, this);
-//			for (int i = 0; i < xtube.size(); i++) {
-				g.drawImage(pipe_img[0], back_x+720, 32, this);
-//				g.drawImage(pipe_img[0], xtube.get(i), uptube.get(i), this);
-//				g.drawImage(pipe_img[1], xtube.get(i), uptube.get(i), this);
-//				xtube.set(i, xtube.get(i)-back_x);
-//			}
+			for (int i = 0; i < xtube.size(); i++) {
+				g.drawImage(pipe_img[0], xtube.get(i), uptube.get(i), this);
+				g.drawImage(pipe_img[1], xtube.get(i), downtube.get(i), this);
+			}
 		}
 		else {
 			center_pan.setOpaque(false);
@@ -102,6 +101,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	public void run() {
 		// TODO Auto-generated method stub
 		int wait=0;
+		int cl=0;
 		while (true) {
 			try {
 				if (runable&playing) {
@@ -111,17 +111,21 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					else {
 						Bird_y=frame_height-50;
 					}
-					if (wait%5==0) {
-						double up=Math.random();
-						if (up<0.5) {
-							uptube.add((int)Math.round(600*Math.random())-30-600);
-						}
-						else {
-							downtube.add((int)Math.round(600*Math.random())+20);
-						}
-//						xtube.add((int)frame_width);
+					if (wait%20==0) {
+						uptube.add((int)Math.round(600*Math.random())-30-600);
+						downtube.add((int)Math.round(600*Math.random())+20);
+						xtube.add((int)frame_width);
 					}
 					back_x=(back_x-10)%720;
+					cl=(cl+10)%frame_width;
+					for (int i = 0; i < xtube.size()-1; i++) {
+						xtube.set(i, xtube.get(i)-10);
+					}
+					if (cl==0) {
+						uptube.remove(0);
+						downtube.remove(0);
+						xtube.remove(0);
+					}
 					repaint();
 					i=(i+1)%4;
 					wait++;
@@ -218,6 +222,15 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				}
 			});
 		}
+	public void fileopen() {
+	File temp=new File("image/pic1.png");
+	try {
+		Desktop.getDesktop().open(temp);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 	public static void main(String[] args) {
 		MainFrame test=new MainFrame();
 	}
