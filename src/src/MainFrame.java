@@ -43,11 +43,6 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		his_wri=new WriteHistory();
 		birds_img=new Image[4];
 		pipe_img=new Image[2];
-		score_lab=new JLabel();
-		score_lab.setOpaque(false);
-		score_lab.setSize(new Dimension(40,40));
-		score_lab.setLayout(new GridLayout(2,1));
-		score_lab.setOpaque(false);
 		center_pan=new JPanel(new GridLayout(4,1));
 		start_but=new JButton("开始游戏");
 //		start_but.setSize(new Dimension(10,50));
@@ -131,8 +126,8 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						Bird_y=frame_height-50;
 					}
 					if (wait%20==0) {
-						uptube.add((int)Math.round(frame_height*Math.random()/2)-570);
-						downtube.add((int)Math.round(300*Math.random())+frame_height/2+20);
+						uptube.add((int)Math.round(frame_height*Math.random()/2)-630);
+						downtube.add((int)Math.round(500*Math.random())+frame_height/2+20);
 						xtube.add((int)frame_width);
 					}
 					back_x=(back_x-10)%720;

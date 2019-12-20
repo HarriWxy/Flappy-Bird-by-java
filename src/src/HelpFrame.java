@@ -36,11 +36,6 @@ public class HelpFrame extends BasicFrame implements Runnable{
 		setTitle("Flappy Bird Help");
 		birds_img=new Image[4];
 		pipe_img=new Image[2];
-		score_lab=new JLabel();
-		score_lab.setOpaque(false);
-		score_lab.setSize(new Dimension(40,40));
-		score_lab.setLayout(new GridLayout(2,1));
-		score_lab.setOpaque(false);
 		center_pan=new JPanel(new GridLayout(4,1));
 		downtube=new ArrayList<Integer>();//下面管子的y坐标
 		uptube=new ArrayList<Integer>();//上面管子的y坐标

@@ -24,15 +24,15 @@ import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public abstract class BasicFrame extends JFrame{
+	//基本的界面，包括游戏的背景、窗口监听器、图片的加载等基本元素
 	Container c;
-	JLabel score_lab;//得分标签,可以不用标签，用paint画出来
-	int frame_width=720,frame_height=1080;//界面的大小
+	int frame_width=720,frame_height=1080;//默认的界面的大小
 	ImageIcon back_img;//背景图片
 	Image[]birds_img;//鸟照片
-	Image[]pipe_img;
+	Image[]pipe_img;//管道的照片
 	int score,hisscore;//得分和历史得分
 	JPanel center_pan;//中间按钮区域
-	boolean runable=false;
+	boolean runable=false;//线程是否执行的一个标志位，主要用于控制
 	int Bird_x,Bird_y;//鸟的位置
 	ArrayList<Integer> uptube;//上面管子的y坐标
 	ArrayList<Integer> downtube;//下面管子的y坐标
