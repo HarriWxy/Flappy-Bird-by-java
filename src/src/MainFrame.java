@@ -21,6 +21,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -29,6 +30,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 	int back_x=0;
 	boolean jumpflag=false;
 	boolean playing=false;
+	boolean paintbird=false;
 	//注意左上角为(0,0)坐标点。
 	JButton start_but,history_but,help_but,exit_but;
 	public MainFrame() {
@@ -56,10 +58,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		center_pan.add(exit_but);
 		downtube=new ArrayList<Integer>();//下面管子的y坐标
 		uptube=new ArrayList<Integer>();//上面管子的y坐标
-		xtube=new ArrayList<>();
-//		uptube.add((int)Math.round(600*Math.random())-30-600);
-//		downtube.add((int)Math.round(600*Math.random())+20);
-		
+		xtube=new ArrayList<>();	
 		Bird_x=frame_width/3;
 		Bird_y=frame_height/2;
 		this.setVisible(true);
@@ -81,13 +80,15 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		// TODO Auto-generated method stub
 		super.paint(g);
 		if (playing) {
-			for (int i = 0; i < frame_width/720+2; i++) {
+			for (int i = 0; i < frame_width/720+2; i++) {//画背景
 				g.drawImage(back_img.getImage(), back_x+720*i, 0, this);
 			}
-			g.drawImage(birds_img[i], Bird_x, Bird_y, this);
-			for (int i = 0; i < xtube.size(); i++) {
-				g.drawImage(pipe_img[0], xtube.get(i), uptube.get(i), this);
-				g.drawImage(pipe_img[1], xtube.get(i), downtube.get(i), this);
+			g.drawImage(birds_img[i], Bird_x, Bird_y, this);//画鸟
+			if (!paintbird) {    //降低重复刷新管道图片导致界面闪烁
+				for (int i = 0; i < xtube.size(); i++) {
+					g.drawImage(pipe_img[0], xtube.get(i), uptube.get(i), this);
+					g.drawImage(pipe_img[1], xtube.get(i), downtube.get(i), this);
+				}
 			}
 		}
 		else {
@@ -112,13 +113,31 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						Bird_y=frame_height-50;
 					}
 					if (wait%20==0) {
-						uptube.add((int)Math.round(600*Math.random())-30-600);
-						downtube.add((int)Math.round(600*Math.random())+20);
+						uptube.add((int)Math.round(frame_height*Math.random()/2)-30-600);
+						downtube.add((int)Math.round(600*Math.random())+frame_height/2+20);
 						xtube.add((int)frame_width);
 					}
 					back_x=(back_x-10)%720;
-					cl=(cl+10)%frame_width;
+					cl=(cl+5)%frame_width;
 					for (int i = 0; i < xtube.size()-1; i++) {
+						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
+							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
+								 playing=false;
+								 int m=JOptionPane.showConfirmDialog(this, "是否重新开始？", "Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								 if (m==0) {
+									uptube.clear();
+									downtube.clear();
+									xtube.clear();
+									playing=true;
+									
+								}
+								 else {
+									
+								}
+								 repaint();
+								 break;
+							}
+						}
 						xtube.set(i, xtube.get(i)-10);
 					}
 					if (cl==0) {
@@ -131,7 +150,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					wait++;
 				}
 					
-					Thread.sleep(100);//速度调低了一点原来是50现在是100
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -147,6 +166,17 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 			e.printStackTrace();
 		}
 	}
+	public void birdjump() {//鸟的跳跃
+		if (Bird_y>65) {
+			Bird_y-=35;
+		}
+		else {
+			Bird_y=35;
+		}
+		paintbird=true;
+		repaint();
+		paintbird=false;
+	}
 	@Override
 		public void listener() {
 			// TODO Auto-generated method stub
@@ -160,13 +190,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 						playing=!playing;
 					}
 					if (arg0.getKeyChar()==' ') {
-						if (Bird_y>65) {
-							Bird_y-=35;
-						}
-						else {
-							Bird_y=35;
-						}
-						repaint();
+						birdjump();
 					}
 					else {
 						
@@ -178,13 +202,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				public void mouseClicked(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					super.mouseClicked(arg0);
-					if (Bird_y>65) {
-						Bird_y-=35;
-					}
-					else {
-						Bird_y=35;
-					}
-					repaint();
+					birdjump();
 				}
 			});
 			exit_but.addActionListener(new ActionListener() {
@@ -200,7 +218,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
-					removeAll();
+					c.removeAll();
 					runable=true;
 					playing=true;
 					now=new Date();
@@ -222,15 +240,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				}
 			});
 		}
-	public void fileopen() {
-	File temp=new File("image/pic1.png");
-	try {
-		Desktop.getDesktop().open(temp);
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-}
+
 	public static void main(String[] args) {
 		MainFrame test=new MainFrame();
 	}
