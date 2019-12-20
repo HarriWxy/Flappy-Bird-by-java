@@ -16,17 +16,17 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class HistoryFrame extends BasicFrame{//得分纪录界面
 
-	private ArrayList<Integer> his_score = new ArrayList();
+	private ArrayList<Integer> his_score = new ArrayList<Integer>();
 	private Date date=new Date();
 	JButton back_but=new JButton("返回");
 
-	JList jList=new JList();
+	JList<Object> jList=new JList<Object>();
 
 	ImageIcon icon=new ImageIcon("image/bg.jpg");
 	JLabel labpic=new JLabel(icon);
 	public HistoryFrame() {
 		// TODO Auto-generated constructor stub
-		File hisfile = new File("C:\\Users\\some people\\Desktop\\Flappy-Bird-by-java-degree2\\bin\\src\\flappybird hisscore.txt");
+		File hisfile = new File("/flappybird hisscore.txt");
 		if (!hisfile.exists()) {
 			try {
 				PrintWriter output = new PrintWriter(hisfile);
@@ -43,6 +43,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 					this.his_score.add(Integer.valueOf(input.nextLine().substring(29)));
 				}
 				this.hisscore=his_score.get(0);
+				input.close();
 			} catch (FileNotFoundException var11) {
 				var11.printStackTrace();
 			}

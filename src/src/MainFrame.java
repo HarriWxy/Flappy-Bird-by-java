@@ -3,6 +3,7 @@ package src;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -90,8 +91,12 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					g.drawImage(pipe_img[1], xtube.get(i), downtube.get(i), this);
 				}
 			}
+			g.setFont(new Font("宋体",Font.PLAIN,30));
+			g.drawString("历史最高分:"+hisscore, 40, 60);
+			g.drawString("当前得分:"+score, 40, 90);
 		}
 		else {
+			c.removeAll();
 			center_pan.setOpaque(false);
 			center_pan.setBounds(frame_width/2-100, 100, 200, 500);
 			c.add(center_pan);
@@ -103,6 +108,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		// TODO Auto-generated method stub
 		int wait=0;
 		int cl=0;
+		score=0;
 		while (true) {
 			try {
 				if (runable&playing) {
@@ -120,10 +126,15 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 					back_x=(back_x-10)%720;
 					cl=(cl+5)%frame_width;
 					for (int i = 0; i < xtube.size()-1; i++) {
+						if (xtube.get(i)+140>=Bird_x-10 &xtube.get(i)+140<Bird_x) {
+							score++;
+						}
 						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
 							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
 								 playing=false;
+								 new WriteHistory(score, now);
 								 int m=JOptionPane.showConfirmDialog(this, "是否重新开始？", "Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								 score=0;
 								 if (m==0) {
 									uptube.clear();
 									downtube.clear();
@@ -157,15 +168,7 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 				}
 		}
 	}
-	public void openfile() {
-		File i=new File("image/0.gif");
-		try {
-			Desktop.getDesktop().open(i);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	public void birdjump() {//鸟的跳跃
 		if (Bird_y>65) {
 			Bird_y-=35;
@@ -177,70 +180,72 @@ public class MainFrame extends BasicFrame implements Runnable{//主要的程序�
 		repaint();
 		paintbird=false;
 	}
+	private void gethisscore() {
+		
+	}
 	@Override
-		public void listener() {
-			// TODO Auto-generated method stub
-			super.listener();
-			this.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyPressed(KeyEvent arg0) {
-					// TODO Auto-generated method stub
-					super.keyTyped(arg0);
-					if (arg0.getKeyChar()=='p') {//暂停按钮
-						playing=!playing;
-					}
-					if (arg0.getKeyChar()==' ') {
-						birdjump();
-					}
-					else {
-						
-					}
+	public void listener() {
+		// TODO Auto-generated method stub
+		super.listener();
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				super.keyTyped(arg0);
+				if (arg0.getKeyChar()=='p') {//暂停按钮
+					playing=!playing;
 				}
-			});
-			this.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					super.mouseClicked(arg0);
+				if (arg0.getKeyChar()==' ') {
 					birdjump();
 				}
-			});
-			exit_but.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					dispose();
+				else {
+					
 				}
-			});
-			start_but.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					c.removeAll();
-					runable=true;
-					playing=true;
-					now=new Date();
-					repaint();
-				}
-			});
-			help_but.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					new HelpFrame();
-				}
-			});
-			history_but.addActionListener(new ActionListener() {//历史记录监听器
-				@Override
-				public void actionPerformed(ActionEvent actionEvent) {
-					new HistoryFrame();
-				}
-			});
-		}
-
+			}
+		});
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(arg0);
+				birdjump();
+			}
+		});
+		exit_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
+		start_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				c.remove(center_pan);
+				runable=true;
+				playing=true;
+				now=new Date();
+				repaint();
+			}
+		});
+		help_but.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new HelpFrame();
+			}
+		});
+		history_but.addActionListener(new ActionListener() {//历史记录监听器
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				new HistoryFrame();
+			}
+		});
+	}
 	public static void main(String[] args) {
 		MainFrame test=new MainFrame();
 	}
