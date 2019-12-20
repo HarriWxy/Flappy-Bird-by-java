@@ -75,7 +75,7 @@ public class HistoryFrame extends BasicFrame{//得分纪录界面
 		JPanel bottom_pan=new JPanel(new FlowLayout());
 		bottom_pan.setOpaque(false);
 		bottom_pan.add(back_but);
-		this.add(bottom_pan,BorderLayout.South);//设置返回按钮在上中
+		this.add(bottom_pan,BorderLayout.SOUTH);//设置返回按钮在上中
 		this.validate();
 		this.setVisible(true);
 		listener();
