@@ -103,8 +103,8 @@ public class HelpFrame extends BasicFrame implements Runnable{
 						if (xtube.get(i)>=Bird_x-140 & xtube.get(i)<=Bird_x+40) {//水平位置判断
 							 if (Bird_y<uptube.get(i)+600|Bird_y+30>downtube.get(i)) {//竖直位置判断
 								 playing=false;
-								 int m=JOptionPane.showConfirmDialog(this, "是否重新开始？", "Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-								 //改一下弹窗提示
+								 int m=JOptionPane.showConfirmDialog(this, "是否结束" ，"Game Over!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+								 
 								 if (m==0) {
 									uptube.clear();
 									downtube.clear();
